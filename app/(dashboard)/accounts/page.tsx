@@ -7,30 +7,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useNewAccount } from '@/features/accounts/hooks/use-new-account';
 import { Loader2, Plus } from 'lucide-react';
 import React from 'react'
-import { Payment, columns } from './columns';
+import {  columns } from './columns';
 import { DataTable } from '@/components/data-table';
+import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
 
-const data:Payment[]=[
-    
-        {
-          id: "728ed52f",
-          amount: 100,
-          status: "pending",
-          email: "m@example.com",
-        },
-        {
-            id: "728ed52f",
-            amount: 100,
-            status: "pending",
-            email: "a@example.com",
-          },
-          
-]
+
 
 const AccountsPage = () => {
    
 
     const {onOpen}=useNewAccount();
+    const accountsQuery=useGetAccounts();
+    const accounts = accountsQuery.data || [];
+
+    const isDisabled =
+    accountsQuery.isLoading
   return (
     <div className="mx-auto -mt-24 w-full max-w-screen-2xl pb-10">
         <Card className="border-none drop-shadow-sm">
@@ -46,7 +37,7 @@ const AccountsPage = () => {
 
             </CardHeader>
             <CardContent>
-                <DataTable data={data} columns={columns} filterKey='email' onDelete={()=>{}} disabled={false}  />
+                <DataTable data={accounts}  columns={columns} filterKey='email' onDelete={()=>{}} disabled={isDisabled}  />
 
             </CardContent>
             
