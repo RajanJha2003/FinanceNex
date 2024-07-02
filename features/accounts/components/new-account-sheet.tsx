@@ -1,10 +1,13 @@
 import React from 'react'
 
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useNewAccount } from '../hooks/use-new-account';
 
 const NewAccountSheet = () => {
+
+    const { isOpen, onClose } = useNewAccount();
   return (
-   <Sheet open>
+   <Sheet open={isOpen} onOpenChange={onClose}>
     <SheetContent>
         <SheetHeader>
         <SheetTitle>
